@@ -25,3 +25,7 @@ class DocumentoPDF(models.Model):
         aprobadores = Usuario.objects.filter(groups__name='Aprobadores')
         return random.choice(aprobadores) if aprobadores else None
 
+class Documento(models.Model):
+    # Otros campos del modelo
+
+    aprobado = models.BooleanField(default=False)

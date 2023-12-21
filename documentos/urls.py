@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import lista_documentos, detalle_documento, custom_login_view, pagina_principal, agregar_documento, eliminar_documento
+from .views import lista_documentos, detalle_documento, custom_login_view, pagina_principal, agregar_documento, eliminar_documento, aprobar_documento
 from .models import Usuario
 urlpatterns = [
      path('', pagina_principal, name='pagina_principal'),  # Agrega esta línea para manejar la URL raíz
@@ -9,6 +9,6 @@ urlpatterns = [
     path('<int:documento_id>/', detalle_documento, name='detalle_documento'),
     path('login/', custom_login_view, name='custom_login_view'),
     path('pagina_principal/', pagina_principal, name='pagina_principal'),
-    
+     path('aprobar_documento/<int:documento_id>/', aprobar_documento, name='aprobar_documento'),
     # Puedes agregar más patrones de URL según sea necesario
 ]

@@ -3,17 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <title>Detalle de Documento</title>
 </head>
 <body>
 
-  <h1>Detalles del Documento</h1>
+  <div class="container mt-4">
+    <h1>Detalles del Documento</h1>
 
-  <p><strong>Nombre:</strong> {{ documento.nombre }}</p>
-  <p><strong>Descripción:</strong> {{ documento.descripcion }}</p>
-  <!-- Agrega más detalles según la estructura de tu modelo DocumentoPDF -->
+    <p><strong>Nombre:</strong> {{ documento.titulo }}</p>
+    <p><strong>Remitente:</strong> {{ documento.remitente }}</p>
+    <!-- Agrega más detalles según la estructura de tu modelo DocumentoPDF -->
+    <p><strong>Estado:</strong> 
+    {% if documento.aprobado %}
+        {{ documento.aprobado_por }}
+    {% else %}
+        Pendiente
+    {% endif %}
+    </p>
 
-  <a href="{% url 'lista_documentos' %}">Volver a la lista de documentos</a>
+    {% if documento.archivo %}
+        <div class="mb-3">
+            <strong>Archivo adjunto:</strong>
+            <a href="{{ documento.archivo.url }}" class="btn btn-primary btn-sm" download>Descargar</a>
+            <!-- <a href="{{ documento.archivo.url }}" target="_blank" class="btn btn-info btn-sm">Visualizar</a> -->
+        </div>
+    {% endif %}
+
+    <a href="{% url 'lista_documentos' %}" class="btn btn-secondary btn-sm">Volver a la lista de documentos</a>
+    <a href="{% url 'perfil_usuario' %}" class="btn btn-secondary btn-sm">Volver al perfil principal</a>
+  </div>
 
 </body>
 </html>

@@ -7,7 +7,9 @@ from django.shortcuts import render
 from .forms import DocumentoPDFForm
 from django.contrib.auth import get_user_model
 from .models import Usuario
-
+from django.contrib.auth.decorators import user_passes_test
+from .models import Documento
+from django.http import JsonResponse
 @login_required
 def lista_documentos(request):
     documentos = DocumentoPDF.objects.all()
@@ -52,3 +54,16 @@ def perfil_usuario(request):
     return render(request, 'documentos/perfil_usuario.html')  # Ajusta la plantilla según tus necesidades
 
 
+@user_passes_test(lambda u: u.is_superuser)
+def aprobar_documento(request, documento_id):
+    documento = get_object_or_404(DocumentoPDF, id=documento_id)
+
+    if not documento.aprobado:
+        # Actualizar el estado del documento
+        documento.aprobado = True
+        documento.aprobado_por = request.user  # O cualquier lógica que uses para registrar quién lo aprobó
+        documento.save()
+
+        return JsonResponse({'success': True, 'message': 'Documento aprobado correctamente.'})
+    else:
+        return JsonResponse({'success': False, 'message': 'El documento ya ha sido aprobado.'})

@@ -4,34 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de Usuario</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body>
+<body class="container">
 
-  <h1>Bienvenido a tu perfil, {{ user.username }}!</h1>
-  
-  <!-- Agrega más detalles del perfil según tu modelo de usuario -->
-  <p><strong>Correo Electrónico:</strong> {{ user.email }}</p>
-  <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+    <div class="mt-5">
+        <h1 class="display-4">¡Bienvenido a tu perfil, {{ user.username }}!</h1>
+        
+        <!-- Detalles del perfil -->
+        <p class="lead"><strong>Correo Electrónico:</strong> {{ user.email }}</p>
+        <p class="lead"><strong>Nombre:</strong> {{ user.username }}</p>
+    </div>
 
-<!-- Agregar esta sección en tu perfil_usuario.html -->
-<h2>Agregar Documento</h2>
-<form method="post" action="{% url 'agregar_documento' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Agregar</button>
-</form>
-<!-- Agregar esta sección en tu perfil_usuario.html -->
-<h2>Lista de Documentos</h2>
-<ul>
-    {% for documento in documentos %}
-        <li>{{ documento.titulo }} - {{ documento.remitente }}</li>
-        <!-- Puedes agregar más detalles según la estructura de tu modelo DocumentoPDF -->
-        <a href="{% url 'eliminar_documento' documento.id %}">Eliminar</a>
-    {% endfor %}
-</ul>
+    <!-- Agregar Documento -->
+    <div class="mt-5">
+        <h2 class="display-5">Agregar Documento</h2>
+        <form method="post" action="{% url 'agregar_documento' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Agregar</button>
+        </form>
+    </div>
 
+    <!-- Lista de Documentos -->
+    <div class="mt-5">
+        <h2 class="display-5">Lista de Documentos</h2>
+        <ul class="list-group">
+            {% for documento in documentos %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ documento.titulo }} - {{ documento.remitente }}
+                    <a href="{% url 'eliminar_documento' documento.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </li>
+                <!-- Puedes agregar más detalles según la estructura de tu modelo DocumentoPDF -->
+            {% endfor %}
+        </ul>
+    </div>
 
-  <a href="{% url 'lista_documentos' %}">Volver a la lista de documentos</a>
+    <!-- Volver a la lista de documentos -->
+    <a href="{% url 'lista_documentos' %}" class="btn btn-primary mt-5">Volver a la lista de documentos</a>
 
+    <!-- Scripts de Bootstrap y otros scripts... -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
