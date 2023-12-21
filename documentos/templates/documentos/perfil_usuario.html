@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+</head>
+<body>
+
+  <h1>Bienvenido a tu perfil, {{ user.username }}!</h1>
+  
+  <!-- Agrega más detalles del perfil según tu modelo de usuario -->
+  <p><strong>Correo Electrónico:</strong> {{ user.email }}</p>
+  <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+
+<!-- Agregar esta sección en tu perfil_usuario.html -->
+<h2>Agregar Documento</h2>
+<form method="post" action="{% url 'agregar_documento' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Agregar</button>
+</form>
+<!-- Agregar esta sección en tu perfil_usuario.html -->
+<h2>Lista de Documentos</h2>
+<ul>
+    {% for documento in documentos %}
+        <li>{{ documento.titulo }} - {{ documento.remitente }}</li>
+        <!-- Puedes agregar más detalles según la estructura de tu modelo DocumentoPDF -->
+        <a href="{% url 'eliminar_documento' documento.id %}">Eliminar</a>
+    {% endfor %}
+</ul>
+
+
+  <a href="{% url 'lista_documentos' %}">Volver a la lista de documentos</a>
+
+</body>
+</html>
