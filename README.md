@@ -7,33 +7,33 @@
 1. Asegúrate de tener Python y pip instalados en tu sistema.
 2. Clona el repositorio desde GitHub:
 
-bash
+
 git clone <URL_del_repositorio>
-```
+
 
 3. Navega al directorio del proyecto:
 
-```bash
+
 cd gestion_PDF
-```
+
 
 4. Crea y activa un entorno virtual:
 
-```bash
+
 python -m venv venv
 # En Windows: venv\Scripts\activate
 # En Unix/MacOS: source venv/bin/activate
-```
+
 
 5. Instala las dependencias:
 
-```bash
+
 pip install -r requirements.txt
-```
+
 
 6. Realiza las migraciones:
 
-```bash
+
 python manage.py migrate
 ```
 
@@ -41,7 +41,7 @@ python manage.py migrate
 
 1. Crea un superusuario:
 
-```bash
+
 python manage.py createsuperuser
 ```
 
@@ -49,9 +49,9 @@ Sigue las instrucciones para ingresar un nombre de usuario, correo electrónico 
 
 2. Inicia el servidor de desarrollo:
 
-```bash
+
 python manage.py runserver
-```
+
 
 3. Accede al panel de administración: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/). Ingresa con las credenciales del superusuario.
 
@@ -88,9 +88,9 @@ python manage.py runserver
 
 - En Windows:
 
-```bash
+
 deactivate
-```
+
 
 - En Unix o MacOS:
 
