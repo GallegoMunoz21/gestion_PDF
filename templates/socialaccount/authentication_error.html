@@ -1,0 +1,21 @@
+{% extends "socialaccount/base_entrance.html" %}
+{% load i18n %}
+{% load allauth %}
+{% load bootstrap4 %}
+{% block head_title %}
+    {% trans "Social Network Login Failure" %}
+{% endblock head_title %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title text-center">{% trans "Social Network Login Failure" %}</h1>
+                        <p class="text-center">{% trans "An error occurred while attempting to login via your social network account." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
