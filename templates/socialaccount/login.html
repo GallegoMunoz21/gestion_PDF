@@ -1,0 +1,55 @@
+{% extends "socialaccount/base_entrance.html" %}
+{% load i18n %}
+{% load allauth %}
+{% load bootstrap4 %}
+{% load socialaccount %}
+{% block head_title %}
+    {% trans "Iniciar sesión" %}
+{% endblock head_title %}
+{% block content %}
+    <div class="container">
+        {% if process == "connect" %}
+            <div class="row justify-content-center">
+                <div class="col-md-6 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title text-center">{% blocktrans with provider.name as provider %}Conectar con {{ provider }}{% endblocktrans %}</h1>
+                            <p class="text-center">
+                                {% blocktrans with provider.name as provider %}Estás a punto de conectar una nueva cuenta de terceros desde {{ provider }}.{% endblocktrans %}
+                            </p>
+                            {% element form method="post" no_visible_fields=True %}
+                                {% slot actions %}
+                                    {% csrf_token %}
+                                    {% element button type="submit" class="btn btn-primary btn-block" %}
+                                        {% trans "Continuar" %}
+                                    {% endelement %}
+                                {% endslot %}
+                            {% endelement %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="row justify-content-center">
+                <div class="col-md-6 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title text-center">{% blocktrans with provider.name as provider %}Iniciar sesión con {{ provider }}{% endblocktrans %}</h1>
+                            <p class="text-center">
+                                {% blocktrans with provider.name as provider %}Estás a punto de iniciar sesión usando una cuenta de terceros desde {{ provider }}.{% endblocktrans %}
+                            </p>
+                            {% element form method="post" no_visible_fields=True %}
+                                {% slot actions %}
+                                    {% csrf_token %}
+                                    {% element button type="submit" class="btn btn-primary btn-block" %}
+                                        {% trans "Continuar" %}
+                                    {% endelement %}
+                                {% endslot %}
+                            {% endelement %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

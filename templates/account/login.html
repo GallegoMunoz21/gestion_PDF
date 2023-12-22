@@ -1,0 +1,44 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+{% load allauth account socialaccount %}
+{% block head_title %}
+    {% trans "Sign In" %}
+{% endblock head_title %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <h1 class="card-title text-center">{% trans "Sign In" %}</h1>
+                        <p class="text-center">
+                            {% blocktrans %}If you have not created an account yet, then please
+                                <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+                        </p>
+                        {% url 'account_login' as login_url %}
+                        <form method="post" action="{{ login_url }}" class="entrance-login-form">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="mb-3">
+                                    {{ field.label_tag }}
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small class="text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary btn-block mt-3">{% trans "Sign In" %}</button>
+                        </form>
+                        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
