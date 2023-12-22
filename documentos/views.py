@@ -10,6 +10,7 @@ from .models import Usuario
 from django.contrib.auth.decorators import user_passes_test
 from .models import Documento
 from django.http import JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
 @login_required
 def lista_documentos(request):
     documentos = DocumentoPDF.objects.all()
@@ -61,9 +62,19 @@ def aprobar_documento(request, documento_id):
     if not documento.aprobado:
         # Actualizar el estado del documento
         documento.aprobado = True
-        documento.aprobado_por = request.user  # O cualquier lógica que uses para registrar quién lo aprobó
+        documento.aprobado_por = request.user
         documento.save()
 
-        return JsonResponse({'success': True, 'message': 'Documento aprobado correctamente.'})
+        # Redirigir a la nueva plantilla
+        return render(request, 'documentos/documento_aprobado.html', {'documento': documento})
     else:
-        return JsonResponse({'success': False, 'message': 'El documento ya ha sido aprobado.'})
+        # Si el documento ya ha sido aprobado, mostrar un mensaje en la misma plantilla
+        return render(request, 'documentos/documento_aprobado.html', {'documento': documento, 'ya_aprobado': True})
+    
+@user_passes_test(lambda u: u.is_superuser)
+def documentos_pendientes_aprobacion(request):
+    documentos_pendientes = DocumentoPDF.objects.filter(aprobado=False)
+    context = {'documentos_pendientes': documentos_pendientes}
+    return render(request, 'documentos/documentos_pendientes.html', context)
+    
+
